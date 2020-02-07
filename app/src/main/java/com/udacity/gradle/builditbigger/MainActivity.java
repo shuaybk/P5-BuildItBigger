@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
         new GetJokeTask().execute(this);
-
     }
 
 
@@ -65,9 +64,21 @@ public class MainActivity extends AppCompatActivity {
 class GetJokeTask extends AsyncTask<Context, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
+    private GetJokeTaskListener mListener = null;
+
+
+    public static interface GetJokeTaskListener {
+        public void onComplete(String result);
+    }
+
+    public GetJokeTask setListener(GetJokeTaskListener listener) {
+        mListener = listener;
+        return this;
+    }
 
     @Override
     protected String doInBackground(Context... params) {
+
         if (myApiService == null) {
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -86,14 +97,21 @@ class GetJokeTask extends AsyncTask<Context, Void, String> {
         try {
             return myApiService.getJokeFromBackend().execute().getData();
         } catch (IOException e) {
-            return e.getMessage();
+            System.out.println("ERROR!!!!  " + e.getMessage());
+            return "";
         }
     }
 
     @Override
     protected void onPostExecute(String result) {
-        Intent intent = new Intent(context, MainJokeActivity.class);
-        intent.putExtra(Intent.EXTRA_TEXT, JokeMaker.getJoke());
-        context.startActivity(intent);
+        if (mListener != null) {
+            mListener.onComplete(result);
+        } else {
+            Intent intent = new Intent(context, MainJokeActivity.class);
+            intent.putExtra(Intent.EXTRA_TEXT, JokeMaker.getJoke());
+            context.startActivity(intent);
+        }
     }
+
+
 }
