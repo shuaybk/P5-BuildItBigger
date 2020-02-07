@@ -13,6 +13,8 @@ public class JokeMaker {
                 " tablets nowadays and handed me her iPad. The fly didn’t stand a chance.");
         add("I forgot my cell phone when I went to the toilet yesterday. We have 245 tiles.");
         add("I’ve always thought my neighbors were quite nice people. But then they put a password on their Wi-Fi.");
+        add("What did the father say to his baby boy before killing him with a vacuum cleaner?\n\n"
+                + "Dyson");
     }};
 
 

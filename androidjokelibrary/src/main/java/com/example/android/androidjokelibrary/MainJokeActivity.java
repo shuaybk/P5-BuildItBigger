@@ -19,5 +19,13 @@ public class MainJokeActivity extends AppCompatActivity {
 
         jokeText = (TextView) findViewById(R.id.tv_joke);
         jokeText.setText(joke);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
