@@ -37,6 +37,7 @@ public class SimpleAndroidTest extends ApplicationTestCase {
         }).execute(getContext());
         signal.await();
 
+        //Make sure the response is a non-empty string
         assertFalse(response.equals(""));
     }
 
