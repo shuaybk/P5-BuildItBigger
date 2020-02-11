@@ -57,14 +57,13 @@ public class MainActivity extends AppCompatActivity {
         new GetJokeTask().execute(this);
     }
 
-
 }
 
 
 class GetJokeTask extends AsyncTask<Context, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
-    private GetJokeTaskListener mListener = null;
+    private GetJokeTaskListener mListener = null;  //Used for testing only
 
 
     public static interface GetJokeTaskListener {
@@ -108,10 +107,9 @@ class GetJokeTask extends AsyncTask<Context, Void, String> {
             mListener.onComplete(result);
         } else {
             Intent intent = new Intent(context, MainJokeActivity.class);
-            intent.putExtra(Intent.EXTRA_TEXT, JokeMaker.getJoke());
+            intent.putExtra(Intent.EXTRA_TEXT, result);
             context.startActivity(intent);
         }
     }
-
 
 }
